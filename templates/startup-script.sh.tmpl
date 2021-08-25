@@ -1,0 +1,39 @@
+#!/bin/bash
+set -e -x
+
+# -----------------------------------------------------------------------------
+#  BASE INSTALL
+# -----------------------------------------------------------------------------
+
+function install_base_packages() {
+  sudo apt install wget curl unzip -y
+}
+
+function install_docker_ce() {
+  sudo apt install docker.io=20.10.7-0ubuntu1~20.04.1 -y
+  sudo systemctl enable --now docker
+}
+
+sudo apt update -y
+
+install_base_packages
+install_docker_ce
+
+sudo docker run \
+  -d \
+  --name enrich \
+  --restart always \
+  --network host \
+%{ if gcp_logs_enabled ~}
+  --log-driver gcplogs \
+%{ else ~}
+  --log-opt max-size=10m \
+  --log-opt max-file=5 \
+%{ endif ~}
+  -e 'JAVA_OPTS=-Dorg.slf4j.simpleLogger.defaultLogLevel=info' \
+  snowplow/snowplow-enrich-pubsub:${version} \
+  --config ${config_b64} \
+  --iglu-config ${iglu_config_b64} \
+  --enrichments ${enrichments_b64}
+
+${telemetry_script}
