@@ -3,7 +3,7 @@ locals {
   module_version = "0.1.2"
 
   app_name    = "enrich-pubsub"
-  app_version = "2.0.5"
+  app_version = "3.0.3"
 
   local_labels = {
     name           = var.name
@@ -125,6 +125,13 @@ locals {
     raw_subscription_id = google_pubsub_subscription.in.id
     good_topic_id       = var.good_topic_id
     bad_topic_id        = var.bad_topic_id
+
+    disable           = !tobool(var.telemetry_enabled)
+    telemetry_url     = join("", module.telemetry.*.collector_uri)
+    user_provided_id  = var.user_provided_id
+    auto_generated_id = join("", module.telemetry.*.auto_generated_id)
+    module_name       = local.module_name
+    module_version    = local.module_version
   })
 
   startup_script = templatefile("${path.module}/templates/startup-script.sh.tmpl", {
