@@ -271,10 +271,9 @@ module "enrich_pubsub" {
 
 # Copyright and license
 
-The Terraform Google Enrich PubSub on Compute Engine project is Copyright 2021-2021 Snowplow Analytics Ltd.
+The Terraform Google Enrich PubSub on Compute Engine project is Copyright 2021-present Snowplow Analytics Ltd.
 
-Licensed under the [Apache License, Version 2.0][license] (the "License");
-you may not use this software except in compliance with the License.
+Licensed under the [Snowplow Community License](https://docs.snowplow.io/community-license-1.0). _(If you are uncertain how it applies to your use case, check our answers to [frequently asked questions](https://docs.snowplow.io/docs/contributing/community-license-faq/).)_
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -288,8 +287,8 @@ limitations under the License.
 [ci]: https://github.com/snowplow-devops/terraform-google-enrich-pubsub-ce/actions?query=workflow%3Aci
 [ci-image]: https://github.com/snowplow-devops/terraform-google-enrich-pubsub-ce/workflows/ci/badge.svg
 
-[license]: https://www.apache.org/licenses/LICENSE-2.0
-[license-image]: https://img.shields.io/badge/license-Apache--2-blue.svg?style=flat
+[license]: https://docs.snowplow.io/docs/contributing/community-license-faq/
+[license-image]: https://img.shields.io/badge/license-Snowplow--Community-blue.svg?style=flat
 
 [registry]: https://registry.terraform.io/modules/snowplow-devops/enrich-pubsub-ce/google/latest
 [registry-image]: https://img.shields.io/static/v1?label=Terraform&message=Registry&color=7B42BC&logo=terraform
