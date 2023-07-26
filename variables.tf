@@ -3,6 +3,17 @@ variable "name" {
   type        = string
 }
 
+variable "app_version" {
+  description = "App version to use. This variable facilitates dev flow, the modules may not work with anything other than the default value."
+  type        = string
+  default     = "3.8.0"
+}
+
+variable "project_id" {
+  description = "The project ID in which the stack is being deployed"
+  type        = string
+}
+
 variable "region" {
   description = "The name of the region to deploy within"
   type        = string
@@ -76,6 +87,12 @@ variable "gcp_logs_enabled" {
   type        = bool
 }
 
+variable "java_opts" {
+  description = "Custom JAVA Options"
+  default     = "-XX:InitialRAMPercentage=75 -XX:MaxRAMPercentage=75"
+  type        = string
+}
+
 # --- Configuration options
 
 variable "raw_topic_name" {
@@ -91,6 +108,17 @@ variable "good_topic_id" {
 variable "bad_topic_id" {
   description = "The id of the bad pubsub topic that enrichment will insert data into"
   type        = string
+}
+
+variable "assets_update_period" {
+  description = "Period after which enrich assets should be checked for updates (e.g. MaxMind DB)"
+  default     = "7 days"
+  type        = string
+
+  validation {
+    condition     = can(regex("\\d+ (ns|nano|nanos|nanosecond|nanoseconds|us|micro|micros|microsecond|microseconds|ms|milli|millis|millisecond|milliseconds|s|second|seconds|m|minute|minutes|h|hour|hours|d|day|days)", var.assets_update_period))
+    error_message = "Invalid period formant."
+  }
 }
 
 # --- Enrichment options

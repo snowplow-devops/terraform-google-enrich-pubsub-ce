@@ -29,21 +29,21 @@ By default this module enables 5 enrichments which you can find in the `template
 ```hcl
 module "raw_topic" {
   source  = "snowplow-devops/pubsub-topic/google"
-  version = "0.1.0"
+  version = "0.3.0"
 
   name = "raw-topic"
 }
 
 module "bad_1_topic" {
   source  = "snowplow-devops/pubsub-topic/google"
-  version = "0.1.0"
+  version = "0.3.0"
 
   name = "bad-1-topic"
 }
 
 module "enriched_topic" {
   source  = "snowplow-devops/pubsub-topic/google"
-  version = "0.1.0"
+  version = "0.3.0"
 
   name = "enriched-topic"
 }
@@ -185,7 +185,7 @@ module "enrich_pubsub" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.15 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
 | <a name="requirement_google"></a> [google](#requirement\_google) | >= 3.44.0 |
 
 ## Providers
@@ -198,7 +198,8 @@ module "enrich_pubsub" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_telemetry"></a> [telemetry](#module\_telemetry) | snowplow-devops/telemetry/snowplow | 0.2.0 |
+| <a name="module_service"></a> [service](#module\_service) | snowplow-devops/service-ce/google | 0.1.0 |
+| <a name="module_telemetry"></a> [telemetry](#module\_telemetry) | snowplow-devops/telemetry/snowplow | 0.5.0 |
 
 ## Resources
 
@@ -206,8 +207,6 @@ module "enrich_pubsub" {
 |------|------|
 | [google_compute_firewall.egress](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall) | resource |
 | [google_compute_firewall.ingress_ssh](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall) | resource |
-| [google_compute_instance_template.tpl](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance_template) | resource |
-| [google_compute_region_instance_group_manager.grp](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_region_instance_group_manager) | resource |
 | [google_project_iam_member.sa_logging_log_writer](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_project_iam_member.sa_pubsub_publisher](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_project_iam_member.sa_pubsub_subscriber](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
@@ -215,7 +214,6 @@ module "enrich_pubsub" {
 | [google_project_iam_member.sa_storage_object_viewer](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_pubsub_subscription.in](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/pubsub_subscription) | resource |
 | [google_service_account.sa](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) | resource |
-| [google_compute_image.ubuntu_20_04](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/compute_image) | data source |
 
 ## Inputs
 
@@ -225,8 +223,11 @@ module "enrich_pubsub" {
 | <a name="input_good_topic_id"></a> [good\_topic\_id](#input\_good\_topic\_id) | The id of the good pubsub topic that enrichment will insert data into | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | A name which will be pre-pended to the resources created | `string` | n/a | yes |
 | <a name="input_network"></a> [network](#input\_network) | The name of the network to deploy within | `string` | n/a | yes |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The project ID in which the stack is being deployed | `string` | n/a | yes |
 | <a name="input_raw_topic_name"></a> [raw\_topic\_name](#input\_raw\_topic\_name) | The name of the raw pubsub topic that enrichment will pull data from | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | The name of the region to deploy within | `string` | n/a | yes |
+| <a name="input_app_version"></a> [app\_version](#input\_app\_version) | App version to use. This variable facilitates dev flow, the modules may not work with anything other than the default value. | `string` | `"3.8.0"` | no |
+| <a name="input_assets_update_period"></a> [assets\_update\_period](#input\_assets\_update\_period) | Period after which enrich assets should be checked for updates (e.g. MaxMind DB) | `string` | `"7 days"` | no |
 | <a name="input_associate_public_ip_address"></a> [associate\_public\_ip\_address](#input\_associate\_public\_ip\_address) | Whether to assign a public ip address to this instance; if false this instance must be behind a Cloud NAT to connect to the internet | `bool` | `true` | no |
 | <a name="input_custom_iglu_resolvers"></a> [custom\_iglu\_resolvers](#input\_custom\_iglu\_resolvers) | The custom Iglu Resolvers that will be used by Enrichment to resolve and validate events | <pre>list(object({<br>    name            = string<br>    priority        = number<br>    uri             = string<br>    api_key         = string<br>    vendor_prefixes = list(string)<br>  }))</pre> | `[]` | no |
 | <a name="input_custom_tcp_egress_port_list"></a> [custom\_tcp\_egress\_port\_list](#input\_custom\_tcp\_egress\_port\_list) | For opening up TCP ports to access other destinations not served over HTTP(s) (e.g. for SQL / API enrichments) | `list(string)` | `[]` | no |
@@ -248,6 +249,7 @@ module "enrich_pubsub" {
 | <a name="input_enrichment_weather_enrichment_config"></a> [enrichment\_weather\_enrichment\_config](#input\_enrichment\_weather\_enrichment\_config) | n/a | `string` | `""` | no |
 | <a name="input_enrichment_yauaa_enrichment_config"></a> [enrichment\_yauaa\_enrichment\_config](#input\_enrichment\_yauaa\_enrichment\_config) | n/a | `string` | `""` | no |
 | <a name="input_gcp_logs_enabled"></a> [gcp\_logs\_enabled](#input\_gcp\_logs\_enabled) | Whether application logs should be reported to GCP Logging | `bool` | `true` | no |
+| <a name="input_java_opts"></a> [java\_opts](#input\_java\_opts) | Custom JAVA Options | `string` | `"-XX:InitialRAMPercentage=75 -XX:MaxRAMPercentage=75"` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | The labels to append to this resource | `map(string)` | `{}` | no |
 | <a name="input_machine_type"></a> [machine\_type](#input\_machine\_type) | The machine type to use | `string` | `"e2-small"` | no |
 | <a name="input_ssh_block_project_keys"></a> [ssh\_block\_project\_keys](#input\_ssh\_block\_project\_keys) | Whether to block project wide SSH keys | `bool` | `true` | no |
