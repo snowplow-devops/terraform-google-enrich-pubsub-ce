@@ -51,6 +51,8 @@ module "enriched_topic" {
 module "enrich_pubsub" {
   source = "snowplow-devops/enrich-pubsub-ce/google"
 
+  accept_limited_use_license = true
+
   name = "enrich-server"
 
   network    = var.network
@@ -102,6 +104,8 @@ EOF
 module "enrich_pubsub" {
   source = "snowplow-devops/enrich-pubsub-ce/google"
 
+  accept_limited_use_license = true
+
   name = "enrich-server"
 
   network    = var.network
@@ -151,6 +155,8 @@ EOF
 
 module "enrich_pubsub" {
   source = "snowplow-devops/enrich-pubsub-ce/google"
+
+  accept_limited_use_license = true
 
   name = "enrich-server"
 
@@ -226,6 +232,7 @@ module "enrich_pubsub" {
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The project ID in which the stack is being deployed | `string` | n/a | yes |
 | <a name="input_raw_topic_name"></a> [raw\_topic\_name](#input\_raw\_topic\_name) | The name of the raw pubsub topic that enrichment will pull data from | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | The name of the region to deploy within | `string` | n/a | yes |
+| <a name="input_accept_limited_use_license"></a> [accept\_limited\_use\_license](#input\_accept\_limited\_use\_license) | Acceptance of the SLULA terms (https://docs.snowplow.io/limited-use-license-1.0/) | `bool` | `false` | no |
 | <a name="input_app_version"></a> [app\_version](#input\_app\_version) | App version to use. This variable facilitates dev flow, the modules may not work with anything other than the default value. | `string` | `"3.8.0"` | no |
 | <a name="input_assets_update_period"></a> [assets\_update\_period](#input\_assets\_update\_period) | Period after which enrich assets should be checked for updates (e.g. MaxMind DB) | `string` | `"7 days"` | no |
 | <a name="input_associate_public_ip_address"></a> [associate\_public\_ip\_address](#input\_associate\_public\_ip\_address) | Whether to assign a public ip address to this instance; if false this instance must be behind a Cloud NAT to connect to the internet | `bool` | `true` | no |
@@ -271,15 +278,9 @@ module "enrich_pubsub" {
 
 # Copyright and license
 
-The Terraform Google Enrich PubSub on Compute Engine project is Copyright 2021-present Snowplow Analytics Ltd.
+Copyright 2021-present Snowplow Analytics Ltd.
 
-Licensed under the [Snowplow Community License](https://docs.snowplow.io/community-license-1.0). _(If you are uncertain how it applies to your use case, check our answers to [frequently asked questions](https://docs.snowplow.io/docs/contributing/community-license-faq/).)_
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+Licensed under the [Snowplow Limited Use License Agreement][license]. _(If you are uncertain how it applies to your use case, check our answers to [frequently asked questions][license-faq].)_
 
 [release]: https://github.com/snowplow-devops/terraform-google-enrich-pubsub-ce/releases/latest
 [release-image]: https://img.shields.io/github/v/release/snowplow-devops/terraform-google-enrich-pubsub-ce
@@ -287,8 +288,9 @@ limitations under the License.
 [ci]: https://github.com/snowplow-devops/terraform-google-enrich-pubsub-ce/actions?query=workflow%3Aci
 [ci-image]: https://github.com/snowplow-devops/terraform-google-enrich-pubsub-ce/workflows/ci/badge.svg
 
-[license]: https://docs.snowplow.io/docs/contributing/community-license-faq/
-[license-image]: https://img.shields.io/badge/license-Snowplow--Community-blue.svg?style=flat
+[license]: https://docs.snowplow.io/limited-use-license-1.0/
+[license-image]: https://img.shields.io/badge/license-Snowplow--Limited--Use-blue.svg?style=flat
+[license-faq]: https://docs.snowplow.io/docs/contributing/limited-use-license-faq/
 
 [registry]: https://registry.terraform.io/modules/snowplow-devops/enrich-pubsub-ce/google/latest
 [registry-image]: https://img.shields.io/static/v1?label=Terraform&message=Registry&color=7B42BC&logo=terraform

@@ -11,6 +11,7 @@ sudo docker run \
   --log-opt max-file=5 \
 %{ endif ~}
   --env JDK_JAVA_OPTIONS='${java_opts}' \
+  --env ACCEPT_LIMITED_USE_LICENSE=${accept_limited_use_license} \
   --env INSTANCE_ID=$(get_instance_id) \
   snowplow/snowplow-enrich-pubsub:${version} \
   --config ${config_b64} \
