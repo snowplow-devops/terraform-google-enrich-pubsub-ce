@@ -74,7 +74,8 @@ resource "google_project_iam_member" "sa_storage_object_viewer" {
 # --- CE: Firewall rules
 
 resource "google_compute_firewall" "ingress_ssh" {
-  name = "${var.name}-ssh-in"
+  project = (var.network_project_id != "") ? var.network_project_id : var.project_id
+  name    = "${var.name}-ssh-in"
 
   network     = var.network
   target_tags = [var.name]
@@ -88,7 +89,8 @@ resource "google_compute_firewall" "ingress_ssh" {
 }
 
 resource "google_compute_firewall" "egress" {
-  name = "${var.name}-traffic-out"
+  project = (var.network_project_id != "") ? var.network_project_id : var.project_id
+  name    = "${var.name}-traffic-out"
 
   network     = var.network
   target_tags = [var.name]
