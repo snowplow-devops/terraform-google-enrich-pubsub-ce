@@ -1,6 +1,6 @@
 locals {
   module_name    = "enrich-pubsub-ce"
-  module_version = "0.3.0"
+  module_version = "0.3.1"
 
   app_name    = "enrich-pubsub"
   app_version = var.app_version
