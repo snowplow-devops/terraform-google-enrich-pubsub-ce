@@ -1,3 +1,7 @@
+Version 0.3.1 (2024-06-03)
+--------------------------
+Add support for shared VPC in central project (#20)
+
 Version 0.3.0 (2024-01-31)
 --------------------------
 Update LICENSE to SLULA (#16)
