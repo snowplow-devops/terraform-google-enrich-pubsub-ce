@@ -204,7 +204,7 @@ module "enrich_pubsub" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_service"></a> [service](#module\_service) | snowplow-devops/service-ce/google | 0.1.0 |
+| <a name="module_service"></a> [service](#module\_service) | snowplow-devops/service-ce/google | 0.2.0 |
 | <a name="module_telemetry"></a> [telemetry](#module\_telemetry) | snowplow-devops/telemetry/snowplow | 0.5.0 |
 
 ## Resources
@@ -236,9 +236,9 @@ module "enrich_pubsub" {
 | <a name="input_app_version"></a> [app\_version](#input\_app\_version) | App version to use. This variable facilitates dev flow, the modules may not work with anything other than the default value. | `string` | `"3.9.0"` | no |
 | <a name="input_assets_update_period"></a> [assets\_update\_period](#input\_assets\_update\_period) | Period after which enrich assets should be checked for updates (e.g. MaxMind DB) | `string` | `"7 days"` | no |
 | <a name="input_associate_public_ip_address"></a> [associate\_public\_ip\_address](#input\_associate\_public\_ip\_address) | Whether to assign a public ip address to this instance; if false this instance must be behind a Cloud NAT to connect to the internet | `bool` | `true` | no |
-| <a name="input_custom_iglu_resolvers"></a> [custom\_iglu\_resolvers](#input\_custom\_iglu\_resolvers) | The custom Iglu Resolvers that will be used by Enrichment to resolve and validate events | <pre>list(object({<br>    name            = string<br>    priority        = number<br>    uri             = string<br>    api_key         = string<br>    vendor_prefixes = list(string)<br>  }))</pre> | `[]` | no |
+| <a name="input_custom_iglu_resolvers"></a> [custom\_iglu\_resolvers](#input\_custom\_iglu\_resolvers) | The custom Iglu Resolvers that will be used by Enrichment to resolve and validate events | <pre>list(object({<br/>    name            = string<br/>    priority        = number<br/>    uri             = string<br/>    api_key         = string<br/>    vendor_prefixes = list(string)<br/>  }))</pre> | `[]` | no |
 | <a name="input_custom_tcp_egress_port_list"></a> [custom\_tcp\_egress\_port\_list](#input\_custom\_tcp\_egress\_port\_list) | For opening up TCP ports to access other destinations not served over HTTP(s) (e.g. for SQL / API enrichments) | `list(string)` | `[]` | no |
-| <a name="input_default_iglu_resolvers"></a> [default\_iglu\_resolvers](#input\_default\_iglu\_resolvers) | The default Iglu Resolvers that will be used by Enrichment to resolve and validate events | <pre>list(object({<br>    name            = string<br>    priority        = number<br>    uri             = string<br>    api_key         = string<br>    vendor_prefixes = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "api_key": "",<br>    "name": "Iglu Central",<br>    "priority": 10,<br>    "uri": "http://iglucentral.com",<br>    "vendor_prefixes": []<br>  },<br>  {<br>    "api_key": "",<br>    "name": "Iglu Central - Mirror 01",<br>    "priority": 20,<br>    "uri": "http://mirror01.iglucentral.com",<br>    "vendor_prefixes": []<br>  }<br>]</pre> | no |
+| <a name="input_default_iglu_resolvers"></a> [default\_iglu\_resolvers](#input\_default\_iglu\_resolvers) | The default Iglu Resolvers that will be used by Enrichment to resolve and validate events | <pre>list(object({<br/>    name            = string<br/>    priority        = number<br/>    uri             = string<br/>    api_key         = string<br/>    vendor_prefixes = list(string)<br/>  }))</pre> | <pre>[<br/>  {<br/>    "api_key": "",<br/>    "name": "Iglu Central",<br/>    "priority": 10,<br/>    "uri": "http://iglucentral.com",<br/>    "vendor_prefixes": []<br/>  },<br/>  {<br/>    "api_key": "",<br/>    "name": "Iglu Central - Mirror 01",<br/>    "priority": 20,<br/>    "uri": "http://mirror01.iglucentral.com",<br/>    "vendor_prefixes": []<br/>  }<br/>]</pre> | no |
 | <a name="input_enrichment_anon_ip"></a> [enrichment\_anon\_ip](#input\_enrichment\_anon\_ip) | n/a | `string` | `""` | no |
 | <a name="input_enrichment_api_request_enrichment_config"></a> [enrichment\_api\_request\_enrichment\_config](#input\_enrichment\_api\_request\_enrichment\_config) | n/a | `string` | `""` | no |
 | <a name="input_enrichment_campaign_attribution"></a> [enrichment\_campaign\_attribution](#input\_enrichment\_campaign\_attribution) | n/a | `string` | `""` | no |
@@ -261,12 +261,12 @@ module "enrich_pubsub" {
 | <a name="input_machine_type"></a> [machine\_type](#input\_machine\_type) | The machine type to use | `string` | `"e2-small"` | no |
 | <a name="input_network_project_id"></a> [network\_project\_id](#input\_network\_project\_id) | The project ID of the shared VPC in which the stack is being deployed | `string` | `""` | no |
 | <a name="input_ssh_block_project_keys"></a> [ssh\_block\_project\_keys](#input\_ssh\_block\_project\_keys) | Whether to block project wide SSH keys | `bool` | `true` | no |
-| <a name="input_ssh_ip_allowlist"></a> [ssh\_ip\_allowlist](#input\_ssh\_ip\_allowlist) | The list of CIDR ranges to allow SSH traffic from | `list(any)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
-| <a name="input_ssh_key_pairs"></a> [ssh\_key\_pairs](#input\_ssh\_key\_pairs) | The list of SSH key-pairs to add to the servers | <pre>list(object({<br>    user_name  = string<br>    public_key = string<br>  }))</pre> | `[]` | no |
+| <a name="input_ssh_ip_allowlist"></a> [ssh\_ip\_allowlist](#input\_ssh\_ip\_allowlist) | The list of CIDR ranges to allow SSH traffic from | `list(any)` | <pre>[<br/>  "0.0.0.0/0"<br/>]</pre> | no |
+| <a name="input_ssh_key_pairs"></a> [ssh\_key\_pairs](#input\_ssh\_key\_pairs) | The list of SSH key-pairs to add to the servers | <pre>list(object({<br/>    user_name  = string<br/>    public_key = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_subnetwork"></a> [subnetwork](#input\_subnetwork) | The name of the sub-network to deploy within; if populated will override the 'network' setting | `string` | `""` | no |
 | <a name="input_target_size"></a> [target\_size](#input\_target\_size) | The number of servers to deploy | `number` | `1` | no |
 | <a name="input_telemetry_enabled"></a> [telemetry\_enabled](#input\_telemetry\_enabled) | Whether or not to send telemetry information back to Snowplow Analytics Ltd | `bool` | `true` | no |
-| <a name="input_ubuntu_20_04_source_image"></a> [ubuntu\_20\_04\_source\_image](#input\_ubuntu\_20\_04\_source\_image) | The source image to use which must be based of of Ubuntu 20.04; by default the latest community version is used | `string` | `""` | no |
+| <a name="input_ubuntu_24_04_source_image"></a> [ubuntu\_24\_04\_source\_image](#input\_ubuntu\_24\_04\_source\_image) | The source image to use which must be based of of Ubuntu 24.04; by default the latest community version is used | `string` | `""` | no |
 | <a name="input_user_provided_id"></a> [user\_provided\_id](#input\_user\_provided\_id) | An optional unique identifier to identify the telemetry events emitted by this stack | `string` | `""` | no |
 
 ## Outputs
