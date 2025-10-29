@@ -1,16 +1,13 @@
 {
   "input": {
-    "type": "PubSub"
     "subscription": "${raw_subscription_id}"
   }
   "output": {
     "good": {
-      "type": "PubSub"
       "topic": "${good_topic_id}"
       "attributes": [ "app_id", "event_name" ]
     }
     "bad": {
-      "type": "PubSub"
       "topic": "${bad_topic_id}"
     }
   }
@@ -37,9 +34,5 @@
     "moduleName": "${telemetry_module_name}"
     "moduleVersion": "${telemetry_module_version}"
     "instanceId": $${INSTANCE_ID}
-  }
-
-  "featureFlags" : {
-    "acceptInvalid": false
   }
 }
