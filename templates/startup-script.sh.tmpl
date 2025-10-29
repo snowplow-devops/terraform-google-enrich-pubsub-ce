@@ -1,3 +1,112 @@
+readonly CONFIG_DIR=/opt/snowplow/config
+
+sudo mkdir -p $${CONFIG_DIR}
+sudo mkdir -p $${CONFIG_DIR}/enrichments
+
+sudo base64 --decode << EOF > $${CONFIG_DIR}/enrich.hocon
+${config_b64}
+EOF
+
+sudo base64 --decode << EOF > $${CONFIG_DIR}/iglu_resolver.json
+${iglu_resolver_b64}
+EOF
+
+%{ if enrichment_campaign_attribution_b64 != "" ~}
+sudo base64 --decode << EOF > $${CONFIG_DIR}/enrichments/campaign_attribution.json
+${enrichment_campaign_attribution_b64}
+EOF
+%{ endif ~}
+
+%{ if enrichment_event_fingerprint_config_b64 != "" ~}
+sudo base64 --decode << EOF > $${CONFIG_DIR}/enrichments/event_fingerprint_config.json
+${enrichment_event_fingerprint_config_b64}
+EOF
+%{ endif ~}
+
+%{ if enrichment_referer_parser_b64 != "" ~}
+sudo base64 --decode << EOF > $${CONFIG_DIR}/enrichments/referer_parser.json
+${enrichment_referer_parser_b64}
+EOF
+%{ endif ~}
+
+%{ if enrichment_ua_parser_config_b64 != "" ~}
+sudo base64 --decode << EOF > $${CONFIG_DIR}/enrichments/ua_parser_config.json
+${enrichment_ua_parser_config_b64}
+EOF
+%{ endif ~}
+
+%{ if enrichment_yauaa_enrichment_config_b64 != "" ~}
+sudo base64 --decode << EOF > $${CONFIG_DIR}/enrichments/yauaa_enrichment_config.json
+${enrichment_yauaa_enrichment_config_b64}
+EOF
+%{ endif ~}
+
+%{ if enrichment_anon_ip_b64 != "" ~}
+sudo base64 --decode << EOF > $${CONFIG_DIR}/enrichments/anon_ip.json
+${enrichment_anon_ip_b64}
+EOF
+%{ endif ~}
+
+%{ if enrichment_api_request_enrichment_config_b64 != "" ~}
+sudo base64 --decode << EOF > $${CONFIG_DIR}/enrichments/api_request_enrichment_config.json
+${enrichment_api_request_enrichment_config_b64}
+EOF
+%{ endif ~}
+
+%{ if enrichment_cookie_extractor_config_b64 != "" ~}
+sudo base64 --decode << EOF > $${CONFIG_DIR}/enrichments/cookie_extractor_config.json
+${enrichment_cookie_extractor_config_b64}
+EOF
+%{ endif ~}
+
+%{ if enrichment_currency_conversion_config_b64 != "" ~}
+sudo base64 --decode << EOF > $${CONFIG_DIR}/enrichments/currency_conversion_config.json
+${enrichment_currency_conversion_config_b64}
+EOF
+%{ endif ~}
+
+%{ if enrichment_http_header_extractor_config_b64 != "" ~}
+sudo base64 --decode << EOF > $${CONFIG_DIR}/enrichments/http_header_extractor_config.json
+${enrichment_http_header_extractor_config_b64}
+EOF
+%{ endif ~}
+
+%{ if enrichment_iab_spiders_and_bots_enrichment_b64 != "" ~}
+sudo base64 --decode << EOF > $${CONFIG_DIR}/enrichments/iab_spiders_and_bots_enrichment.json
+${enrichment_iab_spiders_and_bots_enrichment_b64}
+EOF
+%{ endif ~}
+
+%{ if enrichment_ip_lookups_b64 != "" ~}
+sudo base64 --decode << EOF > $${CONFIG_DIR}/enrichments/ip_lookups.json
+${enrichment_ip_lookups_b64}
+EOF
+%{ endif ~}
+
+%{ if enrichment_javascript_script_config_b64 != "" ~}
+sudo base64 --decode << EOF > $${CONFIG_DIR}/enrichments/javascript_script_config.json
+${enrichment_javascript_script_config_b64}
+EOF
+%{ endif ~}
+
+%{ if enrichment_pii_enrichment_config_b64 != "" ~}
+sudo base64 --decode << EOF > $${CONFIG_DIR}/enrichments/pii_enrichment_config.json
+${enrichment_pii_enrichment_config_b64}
+EOF
+%{ endif ~}
+
+%{ if enrichment_sql_query_enrichment_config_b64 != "" ~}
+sudo base64 --decode << EOF > $${CONFIG_DIR}/enrichments/sql_query_enrichment_config.json
+${enrichment_sql_query_enrichment_config_b64}
+EOF
+%{ endif ~}
+
+%{ if enrichment_weather_enrichment_config_b64 != "" ~}
+sudo base64 --decode << EOF > $${CONFIG_DIR}/enrichments/weather_enrichment_config.json
+${enrichment_weather_enrichment_config_b64}
+EOF
+%{ endif ~}
+
 sudo docker run \
   -d \
   --name enrich \
@@ -10,12 +119,13 @@ sudo docker run \
   --log-opt max-size=10m \
   --log-opt max-file=5 \
 %{ endif ~}
+  --mount type=bind,source=$${CONFIG_DIR},target=/snowplow/config \
   --env JDK_JAVA_OPTIONS='${java_opts}' \
   --env ACCEPT_LIMITED_USE_LICENSE=${accept_limited_use_license} \
   --env INSTANCE_ID=$(get_instance_id) \
   snowplow/snowplow-enrich-pubsub:${version} \
-  --config ${config_b64} \
-  --iglu-config ${iglu_config_b64} \
-  --enrichments ${enrichments_b64}
+  --config /snowplow/config/enrich.hocon \
+  --iglu-config /snowplow/config/iglu_resolver.json \
+  --enrichments /snowplow/config/enrichments/
 
 ${telemetry_script}

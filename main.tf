@@ -143,16 +143,32 @@ locals {
   startup_script = templatefile("${path.module}/templates/startup-script.sh.tmpl", {
     accept_limited_use_license = var.accept_limited_use_license
 
-    config_b64      = base64encode(local.hocon)
-    version         = local.app_version
-    iglu_config_b64 = base64encode(local.iglu_config)
-    enrichments_b64 = base64encode(local.enrichments)
+    config_b64        = base64encode(local.hocon)
+    version           = local.app_version
+    iglu_resolver_b64 = base64encode(local.iglu_resolver)
 
     telemetry_script = join("", module.telemetry.*.gcp_ubuntu_20_04_user_data)
 
     gcp_logs_enabled = var.gcp_logs_enabled
 
     java_opts = var.java_opts
+
+    enrichment_campaign_attribution_b64            = base64encode(local.campaign_attribution)
+    enrichment_event_fingerprint_config_b64        = base64encode(local.event_fingerprint_config)
+    enrichment_referer_parser_b64                  = base64encode(local.referer_parser)
+    enrichment_ua_parser_config_b64                = base64encode(local.ua_parser_config)
+    enrichment_yauaa_enrichment_config_b64         = base64encode(local.yauaa_enrichment_config)
+    enrichment_anon_ip_b64                         = base64encode(var.enrichment_anon_ip)
+    enrichment_api_request_enrichment_config_b64   = base64encode(var.enrichment_api_request_enrichment_config)
+    enrichment_cookie_extractor_config_b64         = base64encode(var.enrichment_cookie_extractor_config)
+    enrichment_currency_conversion_config_b64      = base64encode(var.enrichment_currency_conversion_config)
+    enrichment_http_header_extractor_config_b64    = base64encode(var.enrichment_http_header_extractor_config)
+    enrichment_iab_spiders_and_bots_enrichment_b64 = base64encode(var.enrichment_iab_spiders_and_bots_enrichment)
+    enrichment_ip_lookups_b64                      = base64encode(var.enrichment_ip_lookups)
+    enrichment_javascript_script_config_b64        = base64encode(var.enrichment_javascript_script_config)
+    enrichment_pii_enrichment_config_b64           = base64encode(var.enrichment_pii_enrichment_config)
+    enrichment_sql_query_enrichment_config_b64     = base64encode(var.enrichment_sql_query_enrichment_config)
+    enrichment_weather_enrichment_config_b64       = base64encode(var.enrichment_weather_enrichment_config)
   })
 }
 
