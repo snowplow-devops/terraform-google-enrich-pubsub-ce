@@ -205,7 +205,7 @@ module "enrich_pubsub" {
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_service"></a> [service](#module\_service) | snowplow-devops/service-ce/google | 0.2.0 |
-| <a name="module_telemetry"></a> [telemetry](#module\_telemetry) | snowplow-devops/telemetry/snowplow | 0.5.0 |
+| <a name="module_telemetry"></a> [telemetry](#module\_telemetry) | snowplow-devops/telemetry/snowplow | 0.6.1 |
 
 ## Resources
 
@@ -233,7 +233,7 @@ module "enrich_pubsub" {
 | <a name="input_raw_topic_name"></a> [raw\_topic\_name](#input\_raw\_topic\_name) | The name of the raw pubsub topic that enrichment will pull data from | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | The name of the region to deploy within | `string` | n/a | yes |
 | <a name="input_accept_limited_use_license"></a> [accept\_limited\_use\_license](#input\_accept\_limited\_use\_license) | Acceptance of the SLULA terms (https://docs.snowplow.io/limited-use-license-1.0/) | `bool` | `false` | no |
-| <a name="input_app_version"></a> [app\_version](#input\_app\_version) | App version to use. This variable facilitates dev flow, the modules may not work with anything other than the default value. | `string` | `"5.3.0"` | no |
+| <a name="input_app_version"></a> [app\_version](#input\_app\_version) | App version to use. This variable facilitates dev flow, the modules may not work with anything other than the default value. | `string` | `"6.2.1"` | no |
 | <a name="input_assets_update_period"></a> [assets\_update\_period](#input\_assets\_update\_period) | Period after which enrich assets should be checked for updates (e.g. MaxMind DB) | `string` | `"7 days"` | no |
 | <a name="input_associate_public_ip_address"></a> [associate\_public\_ip\_address](#input\_associate\_public\_ip\_address) | Whether to assign a public ip address to this instance; if false this instance must be behind a Cloud NAT to connect to the internet | `bool` | `true` | no |
 | <a name="input_custom_iglu_resolvers"></a> [custom\_iglu\_resolvers](#input\_custom\_iglu\_resolvers) | The custom Iglu Resolvers that will be used by Enrichment to resolve and validate events | <pre>list(object({<br/>    name            = string<br/>    priority        = number<br/>    uri             = string<br/>    api_key         = string<br/>    vendor_prefixes = list(string)<br/>  }))</pre> | `[]` | no |
